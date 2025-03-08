@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"go-database-webserver/pkg/config"
 
 	"github.com/jinzhu/gorm"
@@ -10,15 +11,16 @@ var db *gorm.DB
 
 type Book struct {
 	gorm.Model
-	Name        string `gorm:"" json:"name"`
-	Author      string ` json:"author"`
-	Publication string `json:"publication"`
+	Name        string `gorm:"type:varchar(255)" json:"name"`
+	Author      string `gorm:"type:varchar(255)" json:"author"`
+	Publication string `gorm:"type:varchar(255)" json:"publication"`
 }
 
 func init() {
 	config.Connect()
 	db = config.GetDB()
 	db.AutoMigrate(&Book{})
+	fmt.Println("Database Migrated")
 }
 
 func (b *Book) CreateBook() *Book {
